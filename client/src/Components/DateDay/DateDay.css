@@ -1,0 +1,35 @@
+.month-day {
+  background: #3D3D4C;
+  border-radius: 0.3vh;
+  border: 0.3vh solid #6C6C80;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #6C6C80;
+  user-select: none;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.month-day > .day-num {
+  font-size: 4.5vh;
+  color: #DDDDE9;
+}
+.month-day > .day-label {
+  font-size: 1vh;
+  transition: all 0.3s ease-in-out;
+}
+.month-day:hover {
+  background: #36aaf9;
+  border: 0.3vh solid #fff;
+}
+.month-day:hover > .day-label {
+  color: rgba(255,255,255,0.7);
+}
+.month-day.selected-day {
+  background: #c702ac;
+  border: 0.3vh solid #fff;
+}
+.month-day.selected-day > .day-label {
+  color: rgba(255,255,255,0.7);
+}

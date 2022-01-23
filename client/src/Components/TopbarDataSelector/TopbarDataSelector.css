@@ -1,0 +1,74 @@
+.select-data {
+  color: white;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  user-select: none;
+}
+.select-data > .decrement,
+.select-data > .increment {
+  font-size: 3vh;
+  width: 4vh;
+  height: 4vh;
+  border-radius: 0.3vh;
+  background: #3D3D4C;
+  margin: 0 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #6C6C80;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+.select-data > .decrement {
+}
+.select-data > .increment {
+}
+.select-data > .decrement::after,
+.select-data > .increment::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 0%;
+  background: #36aaf9;
+  transition: all 0.3s ease-in-out;
+  border-radius: 0.3vh;
+}
+.select-data > .decrement::after {
+  right: 0;
+}
+.select-data > .increment::after {
+  left: 0;
+}
+.select-data > .decrement:hover::after,
+.select-data > .increment:hover::after {
+  width: 100%;
+}
+.select-data > .decrement:hover,
+.select-data > .increment:hover {
+  color: white;
+}
+.select-data > .decrement > svg,
+.select-data > .increment > svg {
+  position: relative;
+  z-index: 2;
+}
+.select-data > .data {
+  font-size: 1.8vh;
+  height: 4vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1.5vh;
+  background: #3D3D4C;
+  border-radius: 0.3vh;
+  font-family: 'Space Mono', monospace;
+  outline: none;
+  border: none;
+  color: white;
+  width: 8vh;
+  text-align: center;
+}

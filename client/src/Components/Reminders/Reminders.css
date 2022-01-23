@@ -1,0 +1,188 @@
+#Reminders {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  backdrop-filter: blur(0.5vh);
+  transition: all 0.3s ease-in-out;
+}
+
+#Reminders > #Container {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  transform: translateX(-50%);
+  width: 50vh;
+  background: #292933;
+  border-radius: 0.3vh;
+  overflow: hidden;
+  box-shadow: 0 0 4vh 0 rgba(0,0,0,0.4);
+}
+#Reminders > #Container > #Topbar-info {
+  width: 100%;
+  height: 4vh;
+  background: #36aaf9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.4vh;
+  user-select: none;
+  position: relative;
+}
+#Reminders > #Container > #Topbar-info > #CloseReminder {
+  position: absolute;
+  right: 0%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  font-size: 2vh;
+  cursor: pointer;
+}
+#Reminders > #Container > #Add-new-reminder {
+  width: 100%;
+} 
+#Reminders > #Container > #Add-new-reminder > #Button-unleash-add {
+  width: 100%;
+  height: 4vh;
+  background: #292933;
+  color: white;
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+} 
+#Reminders > #Container > #Add-new-reminder > #Button-unleash-add > .label {
+  font-size: 1.1vh;
+}
+#Reminders > #Container > #Add-new-reminder > #Button-unleash-add > .icon {
+  font-size: 2vh;
+  margin: 0 1vh;
+}
+#Reminders > #Container > #Add-new-reminder > #Button-unleash-add:hover {
+  background: #3D3D4C;
+}
+
+
+#Reminders > #Container > #Add-new-reminder > form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+#Reminders > #Container > #Add-new-reminder > form > label {
+  margin: 1vh;
+  user-select: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.4vh;
+}
+#Reminders > #Container > #Add-new-reminder > form > label > svg {
+  margin-right: 0.5vh;
+}
+#Reminders > #Container > #Add-new-reminder > form > input {
+  margin: 0 1vh;
+  outline: none;
+  border: none;
+  background: none;
+  color: white;
+  border-bottom: 0.3vh solid #fff;
+  padding: 0.5vh;
+  transition: all 0.3s ease-in-out;
+  font-size: 1.4vh;
+}
+#Reminders > #Container > #Add-new-reminder > form > input:focus,
+#Reminders > #Container > #Add-new-reminder > form > input:hover {
+  border-bottom: 0.3vh solid #36aaf9;
+  color: #36aaf9;
+}
+#Reminders > #Container > #Add-new-reminder > form > #Action-buttons {
+  width: 100%;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  padding: 0 1vh;
+  justify-content: end;
+  margin-top: 1vh;
+}
+#Reminders > #Container > #Add-new-reminder > form > #Action-buttons > .button {
+  background: #3D3D4C;
+  padding: 0.5vh 1vh;
+  font-size: 1.5vh;
+  border-radius: 0.3vh;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+#Reminders > #Container > #Add-new-reminder > form > #Action-buttons > .button:hover {
+  background: #c702ac;
+}
+
+#Reminders > #Container > #Reminders-list {
+  width: 100%;
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+#Reminders > #Container > #Reminders-list > .item-reminder {
+  width: 100%;
+  background: #3D3D4C;
+  color: white;
+  position: relative;
+  padding: 0.5vh 1vh;
+}
+
+#Reminders > #Container > #Reminders-list > .item-reminder > .item-label {
+  font-size: 1.4vh;
+  max-width: 80%;
+}
+#Reminders > #Container > #Reminders-list > .item-reminder > .item-note {
+  max-width: 80%;
+  font-size: 1vh;
+  color: rgba(255,255,255,0.6);
+}
+#Reminders > #Container > #Reminders-list > .item-reminder > .item-move,
+#Reminders > #Container > #Reminders-list > .item-reminder > .item-remove {
+  opacity: 0.2;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+  font-size: 1.8vh;
+}
+#Reminders > #Container > #Reminders-list > .item-reminder > .item-move {
+  position: absolute;
+  right: 4vh;
+  top: 1vh;
+  cursor: grab;
+}
+#Reminders > #Container > #Reminders-list > .item-reminder > .item-remove {
+  position: absolute;
+  right: 1vh;
+  top: 1vh;
+}
+#Reminders > #Container > #Reminders-list > .item-reminder:hover > .item-move,
+#Reminders > #Container > #Reminders-list > .item-reminder:hover > .item-remove {
+  opacity: 1;
+}
+#Reminders > #Container > #Reminders-list > .item-reminder > .item-move:hover,
+#Reminders > #Container > #Reminders-list > .item-reminder > .item-remove:hover {
+  color: #c702ac;
+} 
+
+/* width */
+::-webkit-scrollbar {
+  width: 1vh;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 0.3vh;
+  background: rgba(255,255,255,0.1);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.6);
+  border-radius: 0.3vh;
+}

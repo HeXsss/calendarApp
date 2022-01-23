@@ -1,0 +1,12 @@
+#Calendar {
+  width: 80vh;
+  height: 80vh;
+  /* background: #292933; */
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  grid-gap: 1vh;
+  padding: 1vh;
+  border-radius: 0.3vh;
+}
