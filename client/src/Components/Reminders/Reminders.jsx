@@ -21,6 +21,17 @@ export default class Reminders extends Component {
     }
     this.toggleAdding = this.toggleAdding.bind(this)
     this.handleAddReminderEvent = this.handleAddReminderEvent.bind(this)
+    this.handleRightClick = this.handleRightClick.bind(this)
+  }
+  handleRightClick(event) {
+    event.preventDefault();
+    this.props.handleClose()
+  }
+  componentDidMount() {
+    document.addEventListener("contextmenu", this.handleRightClick);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("contextmenu", this.handleRightClick);
   }
   toggleAdding() {
     this.setState((prev) => {

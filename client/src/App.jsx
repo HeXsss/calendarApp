@@ -41,7 +41,6 @@ export default class App extends Component {
     reminders.forEach(e => {
       e.date = new Date(e.date)
     })
-    console.log(reminders)
     this.setState({
       loading: false,
       reminders
@@ -118,7 +117,6 @@ export default class App extends Component {
         reminders: prev.reminders.filter(e => e.id !== id)
       }
     })
-    console.log(id)
     const response = await fetch('http://localhost:4001/api/v1/reminders/delete', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },

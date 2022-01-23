@@ -25,7 +25,7 @@ app.get('/api/v1/reminders/get', (req, res, next) => {
       console.log(`[FETCHED] ${obj.length} notifications`)
       res.send(obj);
     });  
-  }, 500)
+  }, 100)
 })
 
 app.get('/api/v1/reminders/freeIndex', (req, res, next) => {
