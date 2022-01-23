@@ -2,6 +2,7 @@ import { Component } from 'react';
 import Topbar from './Components/Topbar/Topbar';
 import Calendar from './Components/Calendar/Calendar';
 import Reminders from './Components/Reminders/Reminders';
+import Loading from './Components/Loading/Loading';
 import './App.css';
 
 export default class App extends Component {
@@ -12,12 +13,39 @@ export default class App extends Component {
       currentDate: new Date(now.getFullYear(), now.getMonth()),
       reminders: [],
       reminderDate: null,
+      loading: false
     }
     this.handleDateUpdate = this.handleDateUpdate.bind(this)
     this.handleSelectDate = this.handleSelectDate.bind(this)
     this.handleCloseReminderManage = this.handleCloseReminderManage.bind(this)
     this.handleAddReminder = this.handleAddReminder.bind(this)
     this.handleRemoveReminder = this.handleRemoveReminder.bind(this)
+  }
+  componentDidMount() {
+    this.loadReminders()
+  }
+  queryDate(date) {
+    const Year = date.getFullYear()
+    const Month = date.getMonth()+1 < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1
+    const Day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+    const Hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
+    const Minute = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+    const Second = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds()
+    const Millisecond = date.getMilliseconds() < 10? `00${date.getMilliseconds()}`: date.getMilliseconds() < 100? `0${date.getMilliseconds()}`:date.getMilliseconds()
+    return `${Year}-${Month}-${Day}T${Hour}:${Minute}:${Second}.${Millisecond}Z`
+  }
+  async loadReminders() {
+    this.setState({ loading: true })
+    const response = await fetch(`http://localhost:4001/api/v1/reminders?date=${this.queryDate(this.state.currentDate)}`)
+    const reminders = await response.json()
+    reminders.forEach(e => {
+      e.date = new Date(e.date)
+    })
+    console.log(reminders)
+    this.setState({
+      loading: false,
+      reminders
+    })
   }
   handleDateUpdate(type, value) {
     let selectedDate = this.state.currentDate
@@ -64,6 +92,7 @@ export default class App extends Component {
   handleAddReminder(date, content, note) {
     if (content.trim() === '') return
     this.setState((prev) => {
+      console.log(date)
       return {
         reminders: [...prev.reminders, {
           id: this.getIndex(),
@@ -85,6 +114,7 @@ export default class App extends Component {
     const isValidDate = this.state.currentDate instanceof Date && !isNaN(this.state.currentDate)
     return (
       <>
+        <Loading loading={this.state.loading}/>
         {this.state.reminderDate !== null && <Reminders handleClose={this.handleCloseReminderManage} selectedDate={this.state.reminderDate} reminders={this.filterRemindersByMonth(this.state.reminders)} handleAddReminder={this.handleAddReminder} handleRemoveReminder={this.handleRemoveReminder}/>}
         <Topbar date={this.state.currentDate} handleDateUpdate={this.handleDateUpdate}/>
         {isValidDate && <Calendar date={this.state.currentDate} reminders={this.filterRemindersByMonth(this.state.reminders)} handleSelectDate={this.handleSelectDate}/>}
