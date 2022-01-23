@@ -32,7 +32,8 @@ export default class Calendar extends Component {
       <div id="Calendar">
         {spanSize !== 0 && <div className="spanGrid" style={{gridColumn: `span ${spanSize}`}}></div>}
         {month.map((e, id) => {
-          return <DateDay key={`month_${id}`} date={e} onClick={this.props.handleSelectDate} reminders={this.filterRemindersByDate(e.getDate())}/>
+          const remindersForDate = this.filterRemindersByDate(e.getDate())
+          return <DateDay key={`month_${id}`} date={e} onClick={this.props.handleSelectDate} reminders={remindersForDate}/>
         })}
       </div>
     )

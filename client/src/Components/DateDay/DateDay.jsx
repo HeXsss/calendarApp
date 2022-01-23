@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { MdNotifications } from 'react-icons/md';
 import './DateDay.css';
 
 export default class Date extends Component {
@@ -15,6 +16,7 @@ export default class Date extends Component {
       <div className={"month-day"} onClick={() => {this.props.onClick(this.props.date.getDate())}}>
         <div className="day-num">{this.props.date.getDate()}</div>
         <div className="day-label">{this.convertDateToWeekday(this.props.date)}</div>
+        {this.props.reminders.length > 0 && <div className="day-notify"><MdNotifications/>{this.props.reminders.length > 10? "10+":this.props.reminders.length}</div>}
       </div>
     )
   }

@@ -137,6 +137,7 @@
 #Reminders > #Container > #Reminders-list > .item-reminder > .item-label {
   font-size: 1.4vh;
   max-width: 80%;
+  min-height: 3.5vh;
 }
 #Reminders > #Container > #Reminders-list > .item-reminder > .item-note {
   max-width: 80%;

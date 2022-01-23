@@ -10,6 +10,7 @@
   user-select: none;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+  position: relative;
 }
 .month-day > .day-num {
   font-size: 4.5vh;
@@ -32,4 +33,16 @@
 }
 .month-day.selected-day > .day-label {
   color: rgba(255,255,255,0.7);
+}
+
+.month-day > .day-notify {
+  position: absolute;
+  right: 3%;
+  top: 5%;
+  color: #00dbde;
+  font-size: 1.3vh;
+  transition: all .3s ease-in-out;
+}
+.month-day:hover > .day-notify {
+  color: white;
 }
