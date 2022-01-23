@@ -36,7 +36,7 @@ export default class App extends Component {
   }
   async loadReminders() {
     this.setState({ loading: true })
-    const response = await fetch(`http://localhost:4001/api/v1/reminders?date=${this.queryDate(this.state.currentDate)}`)
+    const response = await fetch(`http://localhost:4001/api/v1/reminders/get?date=${this.queryDate(this.state.currentDate)}`)
     const reminders = await response.json()
     reminders.forEach(e => {
       e.date = new Date(e.date)
@@ -46,6 +46,11 @@ export default class App extends Component {
       loading: false,
       reminders
     })
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentDate !== this.state.currentDate) {
+      this.loadReminders()
+    }
   }
   handleDateUpdate(type, value) {
     let selectedDate = this.state.currentDate
@@ -61,9 +66,6 @@ export default class App extends Component {
       currentDate: selectedDate,
     })
   }
-  filterRemindersByMonth(reminders) {
-    return reminders.filter(e => e.date.getMonth() === this.state.currentDate.getMonth() && e.date.getFullYear() === this.state.currentDate.getFullYear())
-  }
   handleSelectDate(date) {
     if (this.state.reminderDate !== null) {
       console.warn('Already setted')
@@ -78,36 +80,51 @@ export default class App extends Component {
       reminderDate: null
     })
   }
-  getIndex() {
-    const allIndexes = this.state.reminders.map(e => e.id)
-    let id = 1
-    while (true) {
-      if (!allIndexes.includes(id)) {
-        console.log(id)
-        return id
-      }
-      id++
-    }
+  async getIndex() {
+    const response = await fetch('http://localhost:4001/api/v1/reminders/freeIndex')
+    const json = await response.json()
+    const id = json.id
+    return id
   }
-  handleAddReminder(date, content, note) {
+  async handleAddReminder(date, content, note) {
     if (content.trim() === '') return
+    let remind = null
+    const index = await this.getIndex()
     this.setState((prev) => {
-      console.log(date)
+      remind = {
+        id: index,
+        date,
+        content,
+        note
+      }
       return {
-        reminders: [...prev.reminders, {
-          id: this.getIndex(),
-          date,
-          content,
-          note
-        }]
+        reminders: [...prev.reminders, remind]
       }
     })
+    const response = await fetch('http://localhost:4001/api/v1/reminders/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: remind.id,
+        date: this.queryDate(remind.date),
+        content: remind.content,
+        note: remind.note
+      })
+    })
   }
-  handleRemoveReminder(id) {
+  async handleRemoveReminder(id) {
     this.setState((prev) => {
       return {
         reminders: prev.reminders.filter(e => e.id !== id)
       }
+    })
+    console.log(id)
+    const response = await fetch('http://localhost:4001/api/v1/reminders/delete', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: id
+      })
     })
   }
   render() {
@@ -115,9 +132,9 @@ export default class App extends Component {
     return (
       <>
         <Loading loading={this.state.loading}/>
-        {this.state.reminderDate !== null && <Reminders handleClose={this.handleCloseReminderManage} selectedDate={this.state.reminderDate} reminders={this.filterRemindersByMonth(this.state.reminders)} handleAddReminder={this.handleAddReminder} handleRemoveReminder={this.handleRemoveReminder}/>}
+        {this.state.reminderDate !== null && <Reminders handleClose={this.handleCloseReminderManage} selectedDate={this.state.reminderDate} reminders={this.state.reminders} handleAddReminder={this.handleAddReminder} handleRemoveReminder={this.handleRemoveReminder}/>}
         <Topbar date={this.state.currentDate} handleDateUpdate={this.handleDateUpdate}/>
-        {isValidDate && <Calendar date={this.state.currentDate} reminders={this.filterRemindersByMonth(this.state.reminders)} handleSelectDate={this.handleSelectDate}/>}
+        {isValidDate && <Calendar date={this.state.currentDate} reminders={this.state.reminders} handleSelectDate={this.handleSelectDate}/>}
       </>
     )
   }

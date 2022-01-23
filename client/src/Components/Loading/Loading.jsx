@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { MdFiberSmartRecord } from 'react-icons/md'
 import './Loading.css';
 
 export default class Loading extends Component {
@@ -6,6 +7,6 @@ export default class Loading extends Component {
     super(props);
   }
   render() {
-    return <></>
+    return <div id="Loading" className={this.props.loading ? "":"stopped"}><MdFiberSmartRecord/></div>
   }
 }
